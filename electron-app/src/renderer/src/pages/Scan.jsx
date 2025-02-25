@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 import { FileUpload } from '../components/FileUpload';
 import FullScan from '../components/FullScan';
 
@@ -11,7 +11,7 @@ export default function Home() {
     }
     return (
         <div className='h-screen'>
-            <Header />
+            <Navbar />
             <div className="grid grid-cols-[1.5fr,0.5fr,0.8fr,1.2fr] grid-rows-[1.3fr,0.7fr,1fr] gap-4 border-0 bg-transparent pt-24 p-12 h-full w-full max-w-screen max-h-screen-lg min-h-screen overflow-hidden">
                 
                 <div className="col-span-1 row-span-3 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">

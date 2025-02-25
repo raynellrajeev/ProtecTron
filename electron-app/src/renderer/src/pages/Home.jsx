@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 import PieArcLabel from '../components/PieArcLabel';
 import CircularProgressWithLabel from '../components/Progress';
 import { Stack } from '@mui/material';
@@ -8,7 +8,7 @@ import RAMBoostButton from '../components/RamBoosterButton';
 export default function Home() {
     return (
         <div className='h-screen'>
-            <Header />
+            <Navbar />
             <div className="grid grid-cols-6 grid-rows-4 gap-4 border-0 bg-transparent pt-24 p-12 h-full w-full max-w-screen max-h-screen-lg min-h-screen overflow-hidden">
                 <div className="col-span-3 row-span-1 border-2 rounded-2xl flex items-center  justify-start bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
                     <div className='p-2flex flex-col justify-center w-full'>

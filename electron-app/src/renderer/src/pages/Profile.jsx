@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -90,7 +90,7 @@ export default function Profile() {
 
     return (
         <div className='min-h-screen'>
-            <Header />
+            <Navbar />
             <div className='flex flex-col min-h-screen py-8'>
                 <div className="bg-[rgba(48,48,48,0.3)] w-[95%] md:w-[85%] lg:w-3/4 mx-auto mt-24 border-2 border-[rgba(255,255,255,0.2)] backdrop-blur-[80px] text-white rounded-[10px] p-4 md:p-8 lg:p-[30px_40px]">
                     <div className='flex flex-col md:flex-row gap-4 md:gap-8 items-center md:items-start'>

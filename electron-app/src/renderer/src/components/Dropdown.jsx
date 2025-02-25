@@ -10,7 +10,7 @@ import {
     UserIcon
 } from '@heroicons/react/16/solid';
 
-export default function Dropdown() {
+export default function Dropdown(props) {
   return (
     <div className=" top-24 w-auto p-0 text-right">
       <Menu >
@@ -21,14 +21,14 @@ export default function Dropdown() {
         <MenuItems
           transition
           anchor="bottom end"
-          className="border-2 border-white/25 mt-6 ml-0 w-52 origin-top-right rounded-xl  bg-gray-950/90 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+          className="border-2 border-white/25 mt-6 ml-0 w-52 origin-top-right rounded-xl  bg-gray-950/95 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
         >
           <MenuItem>
                       <Link to="/Login">
                           <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10">
                           <UserIcon className="size-4 fill-white/30" />
                           <div className="flex flex-col flex-start text-left">  
-                            <p>Signed in as <span><strong>User</strong></span></p>
+                            <p>Signed in as <span><strong>{props.username}</strong></span></p>
                             <p className="text-xs" >Switch Account</p>
                           </div>
               <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">A</kbd>
