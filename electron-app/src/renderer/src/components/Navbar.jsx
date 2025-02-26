@@ -135,7 +135,7 @@ export default function Navbar() {
 
                 {/* Mobile Menu Dropdown */}
                 {mobileMenuOpen && (
-                    <div className="absolute border-2 border-white/25 top-full right-0 mt-2 w-72 bg-gray-950/95 rounded-lg shadow-lg py-2 mr-4 md:hidden">
+                    <div className="absolute border-2 border-white/25 top-full right-0 mt-2 w-auto bg-gray-950/95 rounded-lg shadow-lg py-2 mr-4 md:hidden">
                         {navLinks.map((link) => (
                             <NavLink 
                                 key={link.path}
@@ -152,7 +152,7 @@ export default function Navbar() {
                             <div className="px-4">
                                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                                        <StyledTypography variant="header" component="span">Signed in as <span><strong>{username}</strong></span></StyledTypography>
+                                        <StyledTypography variant="header" component="span"><strong>{username}</strong></StyledTypography>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <Link 

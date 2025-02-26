@@ -2,10 +2,7 @@ import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
-    Bars3Icon,
     PencilIcon,
-    Square2StackIcon,
-    TrashIcon,
     PowerIcon,
     UserIcon
 } from '@heroicons/react/16/solid';
@@ -21,7 +18,7 @@ export default function Dropdown(props) {
         <MenuItems
           transition
           anchor="bottom end"
-          className="border-2 border-white/25 mt-6 ml-0 w-52 origin-top-right rounded-xl  bg-gray-950/95 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+          className="border-2 border-white/25 mt-6 ml-0 w-52 origin-top-right rounded-xl bg-gray-950/95 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
         >
           <MenuItem>
                       <Link to="/Login">

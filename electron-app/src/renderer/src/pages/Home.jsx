@@ -42,7 +42,7 @@ export default function Home() {
                         spacing={{ xs: 1, sm: 2, md: 4 }}
                         className="w-full"
                     >
-                        <SimpleAreaChart label='CPU' color='lightblue'/>
+                        <SimpleAreaChart label='CPU' color='#2196F3'/>
                         <SimpleAreaChart label='Memory' color='lightgreen'/>
                     </Stack>
                 </div>
