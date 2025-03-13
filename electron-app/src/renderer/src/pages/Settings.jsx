@@ -81,7 +81,7 @@ const StyledTypography = styled(Typography)(({ variant }) => ({
 }));
 
 export default function Profile() {
-    const [expanded, setExpanded] = useState('panel1');
+    const [expanded, setExpanded] = useState();
     const [toggle, setToggle] = useState({
         Threats: true,
         Updates: true,
@@ -109,12 +109,12 @@ export default function Profile() {
         <div className='min-h-screen'>
             <Navbar />
             <div className='flex flex-col min-h-screen py-8'>
-                <div className="bg-[rgba(48,48,48,0.3)] w-[95%] md:w-[85%] lg:w-3/4 mx-auto mt-24 border-2 border-[rgba(255,255,255,0.2)] backdrop-blur-[80px] text-white rounded-[10px] p-4 md:p-8 lg:p-[30px_40px]">
+                <div className="bg-[rgba(48,48,48,0.3)] w-[65%] md:w-[50%] lg:w-[40%] mx-auto mt-24 border-2 border-[rgba(255,255,255,0.2)] backdrop-blur-[80px] text-white rounded-[10px] p-4 md:p-8 lg:p-[30px_40px]">
                     <div className='flex flex-row items-center gap-4'>
                         <Settings /> 
                         <h1 className='text-l md:text-xl lg:text-2xl font-bold'>Settings</h1>
                     </div>
-                    <div className='mt-8 md:mt-12 lg:mt-16 space-y-4'>
+                    <div className='mt-8 md:mt-12 lg:mt-16 space-y-8'>
                         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                             <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                                 <StyledTypography variant="header" component="span">Security Settings</StyledTypography>

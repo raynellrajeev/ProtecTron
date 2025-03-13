@@ -83,7 +83,7 @@ const StyledTypography = styled(Typography)(({ variant }) => ({
 export default function Navbar() {
     const [username, setUsername] = useState('John Doe');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [expanded, setExpanded] = useState('panel1');
+    const [expanded, setExpanded] = useState();
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
