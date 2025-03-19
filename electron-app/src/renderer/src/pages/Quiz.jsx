@@ -9,12 +9,13 @@ export default function Quiz() {
     Quiz3: true,
     Quiz4: true
   })
-    const scores = {
-        "Quiz1": 8,
-        "Quiz2":9,
-        "Quiz3":5,
-        "Quiz4":0,
-    }
+
+  const scores = {
+    Quiz1: 8,
+    Quiz2: 9,
+    Quiz3: 5,
+    Quiz4: 0
+  }
 
   const handleToggle = (type) => () => {
     setToggle((prev) => ({
@@ -22,6 +23,14 @@ export default function Quiz() {
       [type]: !prev[type]
     }))
   }
+
+  const quizItems = [
+    { id: 'Quiz1', score: scores.Quiz1 },
+    { id: 'Quiz2', score: scores.Quiz2 },
+    { id: 'Quiz3', score: scores.Quiz3 },
+    { id: 'Quiz4', score: scores.Quiz4 }
+  ]
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -34,73 +43,24 @@ export default function Quiz() {
           </div>
 
           <div className="flex flex-col gap-12">
-            <div className="flex justify-between items-center">
-              <p>Quiz-1</p>
-              <div className="flex gap-8">
-                <p>
-                  High score: <span className="text-green-600">{scores.Quiz1}</span>
-                </p>
-                <button
-                  onClick={handleToggle('Quiz1')}
-                  className={`text-sm px-3 py-1 rounded-full transition-colors ${
-                    toggle.Quiz1 ? 'bg-[#2196F3] text-white' : 'bg-white/10 text-white/50'
-                  }`}
-                >
-                  {toggle.Quiz1 ? 'Go' : 'In Progress...'}
-                </button>
+            {quizItems.map(({ id, score }) => (
+              <div key={id} className="flex justify-between items-center">
+                <p>{id}</p>
+                <div className="flex gap-8">
+                  <p>
+                    High score: <span className="text-green-600">{score}</span>
+                  </p>
+                  <button
+                    onClick={handleToggle(id)}
+                    className={`text-sm px-3 py-1 rounded-full transition-colors ${
+                      toggle[id] ? 'bg-[#2196F3] text-white' : 'bg-white/10 text-white/50'
+                    }`}
+                  >
+                    {toggle[id] ? 'Go' : 'In Progress...'}
+                  </button>
+                </div>
               </div>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <p>Quiz-2</p>
-              <div className="flex gap-8">
-                <p>
-                  High score: <span className="text-green-600">{scores.Quiz2}</span>
-                </p>
-                <button
-                  onClick={handleToggle('Quiz2')}
-                  className={`text-sm px-3 py-1 rounded-full transition-colors ${
-                    toggle.Quiz2 ? 'bg-[#2196F3] text-white' : 'bg-white/10 text-white/50'
-                  }`}
-                >
-                  {toggle.Quiz2 ? 'Go' : 'In Progress...'}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <p>Quiz-3</p>
-              <div className="flex gap-8">
-                <p>
-                  High score: <span className="text-green-600">{scores.Quiz3}</span>
-                </p>
-                <button
-                  onClick={handleToggle('Quiz3')}
-                  className={`text-sm px-3 py-1 rounded-full transition-colors ${
-                    toggle.Quiz3 ? 'bg-[#2196F3] text-white' : 'bg-white/10 text-white/50'
-                  }`}
-                >
-                  {toggle.Quiz3 ? 'Go' : 'In Progress...'}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <p>Quiz-4</p>
-              <div className="flex gap-8">
-                <p>
-                  High score: <span className="text-green-600">{scores.Quiz4}</span>
-                </p>
-                <button
-                  onClick={handleToggle('Quiz4')}
-                  className={`text-sm px-3 py-1 rounded-full transition-colors ${
-                    toggle.Quiz4 ? 'bg-[#2196F3] text-white' : 'bg-white/10 text-white/50'
-                  }`}
-                >
-                  {toggle.Quiz4 ? 'Go' : 'In Progress...'}
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
