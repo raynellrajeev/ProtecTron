@@ -3,32 +3,11 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 
 export default function Quiz() {
-  const [toggle, setToggle] = useState({
-    Quiz1: true,
-    Quiz2: true,
-    Quiz3: true,
-    Quiz4: true
-  })
-
-  const scores = {
-    Quiz1: 8,
-    Quiz2: 9,
-    Quiz3: 5,
-    Quiz4: 0
-  }
-
-  const handleToggle = (type) => () => {
-    setToggle((prev) => ({
-      ...prev,
-      [type]: !prev[type]
-    }))
-  }
-
   const quizItems = [
-    { id: 'Quiz1', score: scores.Quiz1 },
-    { id: 'Quiz2', score: scores.Quiz2 },
-    { id: 'Quiz3', score: scores.Quiz3 },
-    { id: 'Quiz4', score: scores.Quiz4 }
+    { id: 'Quiz1', score: 8 },
+    { id: 'Quiz2', score: 9 },
+    { id: 'Quiz3', score: 5 },
+    { id: 'Quiz4', score: 0 }
   ]
 
   return (
@@ -51,12 +30,11 @@ export default function Quiz() {
                     High score: <span className="text-green-600">{score}</span>
                   </p>
                   <button
-                    onClick={handleToggle(id)}
-                    className={`text-sm px-3 py-1 rounded-full transition-colors ${
-                      toggle[id] ? 'bg-[#2196F3] text-white' : 'bg-white/10 text-white/50'
-                    }`}
+                    className={
+                      'text-sm px-3 py-1 rounded-full transition-colors bg-[#2196F3] text-white'
+                    }
                   >
-                    {toggle[id] ? 'Go' : 'In Progress...'}
+                    <p>Go</p>
                   </button>
                 </div>
               </div>
