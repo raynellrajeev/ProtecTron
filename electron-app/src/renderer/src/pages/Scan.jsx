@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { FileUpload } from '../components/FileUpload';
-import ContentScanner from '../components/Scanner';
+import RAMBoostButton from '../components/FullScan';
 
 export default function Home() {
     const [files, setFiles] = useState([])
@@ -20,17 +20,16 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="col-span-2 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar"></div>
-          <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
-            <ContentScanner
-              content=""
-              highlightWords={[
-              ]}
-              reverseDuration={1}
-              scanDuration={4}
-            />
+          <div className="col-span-2 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
+            {/* folder scan */}
           </div>
-          <div className="col-span-3 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25"></div>
+          <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
+            {/* Full scan */}
+            <RAMBoostButton title="Full Scan"/>
+          </div>
+          <div className="col-span-3 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25">
+          {/* logs */}
+          </div>
         </div>
       </div>
     )

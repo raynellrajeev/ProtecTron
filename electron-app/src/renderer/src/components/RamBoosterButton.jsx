@@ -4,7 +4,7 @@ import MemoryIcon from '@mui/icons-material/Memory';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-export default function RAMBoostButton() {
+export default function RAMBoostButton(props) {
   const [isBoosting, setIsBoosting] = useState(false)
   const [boostPercentage, setBoostPercentage] = useState(0)
   const containerRef = useRef(null)
@@ -23,8 +23,8 @@ export default function RAMBoostButton() {
   const buttonStyle = {
     width,
     height,
-    borderRadius: "50%",
-    background: isBoosting ? "#4CAF50" : "#2196F3",
+    borderRadius: props.borderRadius,
+    background: isBoosting ? props.isBoosting : props.isNotBoosting,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -94,7 +94,7 @@ export default function RAMBoostButton() {
           margin: 0,
           lineHeight: 1.2
         }}>
-          {isBoosting ? `${boostPercentage}%` : 'Boost RAM'}
+          {isBoosting ? `${boostPercentage}%` : props.title}
         </p>
       </motion.button>
     </div>

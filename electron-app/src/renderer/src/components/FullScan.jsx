@@ -1,47 +1,123 @@
-import React, { useState } from 'react'
-import { Globe } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded'
+import { useDate } from '../context/DateContext'
 
-export default function FullScan() {
-  const [isScanning, setIsScanning] = useState(false)
-  const startScan = () => {
-    setIsScanning(true)
-    setTimeout(() => setIsScanning(false), 10000)
+export default function RAMBoostButton(props) {
+  const [isBoosting, setIsBoosting] = useState(false)
+  const [boostPercentage, setBoostPercentage] = useState(0)
+  const { setDate } = useDate()
+  const containerRef = useRef(null)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+
+  const getResponsiveSize = () => {
+    if (isMobile) return { width: '60px', height: '60px', fontSize: '15px', iconSize: '26px' }
+    if (isTablet) return { width: '80px', height: '80px', fontSize: '16px', iconSize: '34px' }
+    return { width: '100px', height: '100px', fontSize: '18px', iconSize: '42px' }
   }
 
-  return (
-    <>
-      <div className="bg-transparent p-10 shadow-xl w-full h-auto flex justify-center relative overflow-hidden">
-        {/* Scanning Animation */}
-        {isScanning && (
-          <div className="absolute inset-0">
-            <div className="scanning-line absolute inset-0">
-              <div className="scanning-glow top-1/2 translate-y-1/2" />
-            </div>
-          </div>
-        )}
+  const { width, height, fontSize, iconSize } = getResponsiveSize()
 
-        {/* Content */}
-        <div className="text-center relative z-10">
-          <button
-            onClick={startScan}
-            disabled={isScanning}
-            className={`justify-center
-              relative group flex items-center gap-3  
-              rounded-full font-medium transition-all duration-300
-              ${
-                isScanning
-                  ? 'bg-transparent text-blue-400 cursor-not-allowed'
-                  : 'bg-transparent text-white hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-100'
-              }
-            `}
-          >
-            <Globe
-              className={`w-15 h-15 transition-transform duration-300 ${isScanning ? 'animate-spin' : 'group-hover:rotate-12'}`}
-            />
-            <span className="relative text-xl">{isScanning ? 'Scanning...' : 'Full Scan '}</span>
-          </button>
-        </div>
-      </div>
-    </>
+  const buttonStyle = {
+    width,
+    height,
+    borderRadius: props.borderRadius,
+    background: isBoosting ? props.isBoosting : props.isNotBoosting,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    border: 'none',
+    outline: 'none',
+    color: 'white',
+    fontWeight: 'bold',
+    transition: 'all 0.3s',
+    position: 'relative',
+    overflow: 'hidden'
+  }
+
+  const progressStyle = {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: `${boostPercentage}%`,
+    height: '100%',
+    background: 'rgba(33, 150, 243, 0.2)',
+    transition: 'width 1.5s linear'
+  }
+
+  const handleBoost = () => {
+    if (!isBoosting) {
+      setIsBoosting(true)
+      setBoostPercentage(0)
+    }
+
+    // Return today's date and time
+    var currentTime = new Date()
+
+    // returns the month (from 0 to 11)
+    var month = currentTime.getMonth() + 1
+
+    // returns the day of the month (from 1 to 31)
+    var day = currentTime.getDate()
+
+    // returns the year (four digits)
+    var year = currentTime.getFullYear()
+    var fullDate = `${day}/${month}/${year}`
+    setDate(fullDate)
+    console.log(fullDate)
+  }
+
+  useEffect(() => {
+    if (isBoosting) {
+      const interval = setInterval(() => {
+        setBoostPercentage((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval)
+            setTimeout(() => {
+              setIsBoosting(false)
+              setBoostPercentage(0)
+            }, 1000)
+            return 100
+          }
+          return prev + 1
+        })
+      }, 200)
+      return () => clearInterval(interval)
+    }
+  }, [isBoosting])
+
+  return (
+    <div ref={containerRef} className="w-full h-full flex flex-col items-center justify-center">
+      <motion.button
+        style={buttonStyle}
+        onClick={handleBoost}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="flex flex-col items-center justify-center"
+      >
+        <div style={progressStyle} />
+        <LanguageRoundedIcon
+          sx={{
+            fontSize: iconSize,
+            mb: 1
+          }}
+        />
+        <p
+          style={{
+            fontSize,
+            margin: 0,
+            lineHeight: 1.2
+          }}
+        >
+          {isBoosting ? `${boostPercentage}%` : props.title}
+        </p>
+      </motion.button>
+    </div>
   )
 }
