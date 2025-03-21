@@ -15,9 +15,9 @@ export default function RAMBoostButton(props) {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
 
   const getResponsiveSize = () => {
-    if (isMobile) return { width: '60px', height: '60px', fontSize: '15px', iconSize: '26px' }
-    if (isTablet) return { width: '80px', height: '80px', fontSize: '16px', iconSize: '34px' }
-    return { width: '100px', height: '100px', fontSize: '18px', iconSize: '42px' }
+    if (isMobile) return { width: '150px', height: '400px', fontSize: '18px', iconSize: '26px' }
+    if (isTablet) return { width: '200px', height: '550px', fontSize: '20px', iconSize: '34px' }
+    return { width: '450px', height: '600px', fontSize: '25px', iconSize: '40px' }
   }
 
   const { width, height, fontSize, iconSize } = getResponsiveSize()
@@ -38,17 +38,19 @@ export default function RAMBoostButton(props) {
     fontWeight: 'bold',
     transition: 'all 0.3s',
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    padding: 0
   }
 
   const progressStyle = {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: `${boostPercentage}%`,
-    height: '100%',
+    inset: 0, // This replaces top, left, right, bottom
+    width: '200%',
+    height: '200%',
     background: 'rgba(33, 150, 243, 0.2)',
-    transition: 'width 1.5s linear'
+    transition: 'transform 1.5s linear',
+    transform: `scaleX(${boostPercentage / 100})`,
+    transformOrigin: 'left',
   }
 
   const handleBoost = () => {
@@ -99,24 +101,26 @@ export default function RAMBoostButton(props) {
         onClick={handleBoost}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="flex flex-col items-center justify-center"
+        className="flex flex-col items-center justify-center relative overflow-hidden"
       >
         <div style={progressStyle} />
-        <LanguageRoundedIcon
-          sx={{
-            fontSize: iconSize,
-            mb: 1
-          }}
-        />
-        <p
-          style={{
-            fontSize,
-            margin: 0,
-            lineHeight: 1.2
-          }}
-        >
-          {isBoosting ? `${boostPercentage}%` : props.title}
-        </p>
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          <LanguageRoundedIcon
+            sx={{
+              fontSize: iconSize,
+              mb: 1
+            }}
+          />
+          <p
+            style={{
+              fontSize,
+              margin: 0,
+              lineHeight: 1.2
+            }}
+          >
+            {isBoosting ? `${boostPercentage}%` : props.title}
+          </p>
+        </div>
       </motion.button>
     </div>
   )
