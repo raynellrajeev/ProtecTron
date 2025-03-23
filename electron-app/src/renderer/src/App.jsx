@@ -8,7 +8,6 @@ import Register from './pages/Register'
 import Scan from './pages/Scan'
 import Settings from './pages/Settings'
 import Quiz from './pages/Quiz'
-import Aurora from './assets/Aurora'
 import { DateProvider } from './context/DateContext'
 
 function App() {

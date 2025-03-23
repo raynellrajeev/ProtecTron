@@ -9,7 +9,7 @@ import {
 
 export default function Dropdown(props) {
   return (
-    <div className=" top-24 w-auto p-0 text-right">
+    <div className=" top-24 w-auto p-0 text-right z-50">
       <Menu >
         <MenuButton className="inline-flex items-center gap-2 ml-24 rounded-md py-1.5 px-3 text-sm/6  text-white shadow-white/10 ">
           <Avatar sx={{ width: 25, height: 25 }}  />

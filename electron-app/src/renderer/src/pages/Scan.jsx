@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { FileUpload } from '../components/FileUpload'
-import RAMBoostButton from '../components/FullScan'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { motion } from 'framer-motion'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import FolderIcon from '@mui/icons-material/Folder'
+import FullScanButton from '../components/FullScan'
 
 export default function Home() {
   const [files, setFiles] = useState([])
@@ -69,7 +69,7 @@ export default function Home() {
         </div>
         <div className="col-span-2 row-span-1 border-2 rounded-2xl flex flex-col items-center justify-between bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar p-4">
           {/* folder scan */}
-          <h1 className="font-semibold text-white sm:text-lg md:text-xl lg:text-2xl">Watch dog</h1>
+          <h1 className="font-medium text-white sm:text-lg md:text-xl lg:text-2xl">Watch dog</h1>
           <Box sx={{ display: 'flex', alignItems: 'flex-end', width: '100%', px: 2 }}>
             <FolderIcon
               sx={{
@@ -125,7 +125,7 @@ export default function Home() {
         </div>
         <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
           {/* Full scan */}
-          <RAMBoostButton title="Full Scan" />
+          <FullScanButton title="Full Scan" />
         </div>
         <div className="col-span-3 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-x-hidden overflow-y-scroll">
           <FileUpload onChange={handleFileUpload} />

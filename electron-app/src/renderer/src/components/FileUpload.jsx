@@ -73,7 +73,7 @@ export const FileUpload = ({ onChange }) => {
         />
 
         <div className="flex flex-col items-center justify-center">
-          <p className="relative z-20 font-sans font-bold text-neutral-400 dark:text-neutral-400 text-base mt-2">
+          <p className="relative z-20 text-lg font-medium text-white mt-2 ">
             Drag or drop your files here or click to scan
           </p>
           <div
@@ -146,7 +146,7 @@ export const FileUpload = ({ onChange }) => {
                   damping: 20
                 }}
                 className={cn(
-                  'relative group-hover/file:shadow-2xl z-40 bg-white dark:bg-[#2196F3] flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md',
+                  'relative group-hover/file:shadow-2xl z-40 bg-white dark:bg-[#2195f390] flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md',
                   'shadow-[0px_10px_50px_rgba(0,0,0,0.1)]'
                 )}
               >
@@ -168,7 +168,7 @@ export const FileUpload = ({ onChange }) => {
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
-                className="absolute opacity-0 border-4 border-dashed border-sky-400 inset-0 z-30 bg-transparent flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md"
+                className="absolute opacity-0 border-2 border-dashed border-sky-400 inset-0 z-30 bg-transparent flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md"
               ></motion.div>
             )}
           </div>

@@ -4,8 +4,9 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded'
 import { useDate } from '../context/DateContext'
+import zIndex from '@mui/material/styles/zIndex'
 
-export default function RAMBoostButton(props) {
+export default function FullScanButton(props) {
   const [isBoosting, setIsBoosting] = useState(false)
   const [boostPercentage, setBoostPercentage] = useState(0)
   const { setDate } = useDate()
@@ -15,8 +16,8 @@ export default function RAMBoostButton(props) {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
 
   const getResponsiveSize = () => {
-    if (isMobile) return { width: '150px', height: '400px', fontSize: '18px', iconSize: '26px' }
-    if (isTablet) return { width: '200px', height: '550px', fontSize: '20px', iconSize: '34px' }
+    if (isMobile) return { width: '200px', height: '400px', fontSize: '18px', iconSize: '26px' }
+    if (isTablet) return { width: '300px', height: '550px', fontSize: '20px', iconSize: '34px' }
     return { width: '450px', height: '600px', fontSize: '25px', iconSize: '40px' }
   }
 
@@ -39,7 +40,8 @@ export default function RAMBoostButton(props) {
     transition: 'all 0.3s',
     position: 'relative',
     overflow: 'hidden',
-    padding: 0
+    padding: 0,
+    zIndex
   }
 
   const progressStyle = {
