@@ -1,6 +1,6 @@
 # ProtecTron
 
-A modern desktop security application built with Electron and React, featuring system scanning, RAM optimization, and security education.
+A modern desktop security application built with Electron with React for the frontend and Django for the backend, featuring system scanning, RAM optimization, and security education.
 
 ## Features
 
