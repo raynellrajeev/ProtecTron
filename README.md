@@ -15,6 +15,7 @@ A modern desktop security application built with Electron and React, featuring s
 
 - Electron
 - React
+- Django
 - Tailwind CSS
 - Framer Motion
 - Material-UI
