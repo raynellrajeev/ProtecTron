@@ -86,7 +86,7 @@ Electron should now be running and communicating with the Django backend.
 
 To run both the backend and frontend together:
 
-# Open a terminal and start Django backend
+### Open a terminal and start Django backend
 
 ```bash
 cd protecTron-App/django-app
@@ -95,7 +95,7 @@ venv\Scripts\activate  # (Windows)
 python manage.py runserver
 ```
 
-# Open another terminal and start Electron frontend
+### Open another terminal and start Electron frontend
 
 ```bash
 cd ../electron-app
