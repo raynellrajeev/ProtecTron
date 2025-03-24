@@ -30,6 +30,46 @@ A modern desktop security application built with Electron with React for the fro
 - **Python** (v3.8 or higher)
 - **npm** or **yarn**
 
+## Backend Setup (django-app/)
+
+The backend is built with Django and uses SQLite as the default database.
+
+Step 1: Create a Virtual Environment
+```bash
+cd django-app
+python -m venv venv  # Create virtual environment
+source venv/bin/activate  # (Linux/Mac)
+venv\Scripts\activate  # (Windows)
+```
+Step 2: Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+Step 3: Apply Database Migrations
+```bash
+python manage.py migrate
+```
+Step 4: Start Django Server
+```bash
+python manage.py runserver
+```
+Django should now be running at http://127.0.0.1:8000/.
+
+## Frontend Setup (electron-app/)
+
+The frontend is built using Electron + React.
+
+Step 1: Install Dependencies
+```bash
+cd ../electron-app
+npm install  # Install required packages
+```
+Step 2: Run Electron in Development Mode
+```bash
+npm run dev
+```
+Electron should now be running and communicating with the Django backend.
+
 ## Installation
 
 1. Clone the repository:
