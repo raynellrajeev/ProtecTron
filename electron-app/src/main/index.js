@@ -33,6 +33,16 @@ function createWindow() {
   }
 }
 
+// ✅ Function to Check Django Connectivity
+async function checkDjangoConnection() {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/ping/')
+    console.log('✅ Django Connected:', response.data)
+  } catch (error) {
+    console.error('❌ Failed to connect to Django:', error.message)
+  }
+}
+
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.electron')
 
@@ -46,11 +56,15 @@ app.whenReady().then(() => {
       const response = await axios.get('http://127.0.0.1:8000/api/test/') // Django API URL
       return response.data // Send API response to renderer
     } catch (error) {
+      console.error('❌ API Fetch Error:', error.message)
       return { error: 'Failed to fetch data', details: error.message }
     }
   })
 
   createWindow()
+
+  // ✅ Run Django connection check on app start
+  checkDjangoConnection()
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

@@ -18,7 +18,7 @@ function Login(props) {
             </div>  
             </Link>
             <div className="bg-[rgba(48,48,48,0.3)] border-2 border-[rgba(255,255,255,0.2)] backdrop-blur-[80px] w-[420px] text-white rounded-[10px] p-[30px_40px]">
-                <form action="" onSubmit={props.submit}>
+                <form action="/register" onSubmit={props.submit} method='POST'>
                     <h3 className="text-3xl text-center mb-6">Register</h3>
                     <div className="relative w-full h-[50px] my-[30px]">
                         <input

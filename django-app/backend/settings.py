@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-b=6o9h3i*%5=eyu0^_5jg4f)881y_3ys_2$(i1w^m3^q2*iwvh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['http://127.0.0.1:8000/'] #production
+ALLOWED_HOSTS = [] #development
 
 
 # Application definition
@@ -78,6 +79,13 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-requested-with",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
 
 
 ROOT_URLCONF = 'backend.urls'
