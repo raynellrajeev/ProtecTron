@@ -13,30 +13,34 @@ A modern desktop security application built with Electron with React for the fro
 
 ## Tech Stack
 
-- Electron
-- React
-- Django
-- Tailwind CSS
-- Framer Motion
-- Material-UI
-- Headless UI
-- Shadcn UI
-- Aceternity UI
+### Frontend:
+
+- **Electron** (with React)
+- **Tailwind CSS**, **Framer Motion**, **Material-UI**, **Shadcn UI**, **Aceternity UI**
+
+### Backend:
+
+- **Django (DRF)**
+- **SQLite**
+- **django-cors-headers**
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- **Node.js** (v14 or higher)
+- **Python** (v3.8 or higher)
+- **npm** or **yarn**
 
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd electron-app
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
@@ -44,6 +48,7 @@ npm install
 ## Development
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -66,17 +71,36 @@ npm run build:linux
 ## Project Structure
 
 ```
-electron-app/
-├── src/
-│   ├── main/           # Electron main process
-│   ├── preload/        # Preload scripts
-│   └── renderer/       # React application
-│       ├── src/
-│       │   ├── assets/     # Static assets
-│       │   ├── components/ # React components
-│       │   ├── pages/      # Application pages
-│       │   └── lib/        # Utility functions
-│       └── index.html
+protecTron-App/
+├── django-app/         # Django backend
+│   ├── api/            # Django REST Framework APIs
+|   ├── backend/
+|   ├── .gitignore
+│   ├── manage.py       # Django CLI
+│   └── db.sqlite3      # Database
+│
+├──  electron-app/
+|   ├── src/
+|   │   ├── main/           # Electron main process
+|   │   ├── preload/        # Preload scripts
+|   │   └── renderer/       # React application
+|   │       ├── src/
+|   |       |   ├── App.jsx
+|   |       |   ├── main.jsx
+|   │       │   ├── assets/     # Static assets
+|   │       │   ├── components/ # React components
+|   |       |   ├── context/
+|   │       │   ├── pages/      # Application pages
+|   │       │   └── lib/        # Utility functions
+|   │       ├──index.html
+|   |       └──index.js
+|   ├── .gitignore
+|   └── package.json
+│
+├── venv/               # Virtual environment (ignored in Git)
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
 ## Contributing
