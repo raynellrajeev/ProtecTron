@@ -1,7 +1,16 @@
 from rest_framework import serializers
-from .models import UserData
+from django.contrib.auth.hashers import make_password
+from .models import CustomUser
 
-class UserDataSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
-        model = UserData
-        fields = '__all__'
+        model = CustomUser
+        fields = ["id", "username", "email", "mobile_number", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        # Hash the password before saving
+        validated_data["password"] = make_password(validated_data["password"])
+        return super().create(validated_data)
