@@ -37,9 +37,9 @@ function createWindow() {
 async function checkDjangoConnection() {
   try {
     const response = await axios.get('http://127.0.0.1:8000/api/ping/')
-    console.log('✅ Django Connected:', response.data)
+    console.log('Django Connected:', response.data)
   } catch (error) {
-    console.error('❌ Failed to connect to Django:', error.message)
+    console.error('Failed to connect to Django:', error.message)
   }
 }
 
@@ -56,7 +56,7 @@ app.whenReady().then(() => {
       const response = await axios.get('http://127.0.0.1:8000/api/test/') // Django API URL
       return response.data // Send API response to renderer
     } catch (error) {
-      console.error('❌ API Fetch Error:', error.message)
+      console.error('API Fetch Error:', error.message)
       return { error: 'Failed to fetch data', details: error.message }
     }
   })
