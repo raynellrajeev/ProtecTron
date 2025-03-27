@@ -9,6 +9,7 @@ import Scan from './pages/Scan'
 import Settings from './pages/Settings'
 import Quiz from './pages/Quiz'
 import { DateProvider } from './context/DateContext'
+import React from 'react'
 
 function App() {
   return (
