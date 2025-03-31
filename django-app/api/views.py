@@ -1,112 +1,64 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from rest_framework import generics
-from .serializers import UserSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.contrib.auth import get_user_model, authenticate, login, logout
+from rest_framework import generics, status
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .models import CustomUser
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
 from django.http import JsonResponse
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-from django.contrib.auth import authenticate, login, logout
+from rest_framework.parsers import JSONParser, FormParser
+
+from .serializers import UserSerializer
+
+User = get_user_model()  # Uses custom user model if defined
 
 class CreateUserView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-# Create your views here.
-@csrf_exempt
-def register_user(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            username = data.get("username")
-            password = data.get("password")
+class RegisterUserView(APIView):
+    permission_classes = [AllowAny]
+    parser_classes = [JSONParser, FormParser]  # Allow JSON and x-www-form-urlencoded
 
-            # Check if the user already exists
-            if User.objects.filter(username=username).exists():
-                return JsonResponse({"message": "Username already taken"}, status=400)
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
 
-            # Create a new user
-            user = User.objects.create_user(username=username, password=password)
-            return JsonResponse({"message": "User registered successfully!"}, status=201)
+        if not username or not password:
+            return Response({"error": "Username and password are required"}, status=400)
 
-        except json.JSONDecodeError:
-            return JsonResponse({"message": "Invalid JSON format"}, status=400)
+        if User.objects.filter(username=username).exists():
+            return Response({"error": "Username already taken"}, status=400)
 
-    return JsonResponse({"message": "Method not allowed"}, status=405)
+        user = User.objects.create_user(username=username, password=password)
+        return Response({"message": "User registered successfully!"}, status=201)
 
+class LoginUserView(APIView):
+    permission_classes = [AllowAny]
 
-# ✅ Login a User
-@csrf_exempt
-def login_user(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            username = data.get("username")
-            password = data.get("password")
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
 
-            # Authenticate user
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return JsonResponse({"message": "Login successful"}, status=200)
-            else:
-                return JsonResponse({"message": "Invalid credentials"}, status=401)
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            return Response({"message": "Login successful"}, status=200)
+        return Response({"error": "Invalid credentials"}, status=401)
 
-        except json.JSONDecodeError:
-            return JsonResponse({"message": "Invalid JSON format"}, status=400)
+class LogoutUserView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    return JsonResponse({"message": "Method not allowed"}, status=405)
-
-
-# ✅ Logout a User
-@csrf_exempt
-def logout_user(request):
-    if request.method == "POST":
+    def post(self, request):
         logout(request)
-        return JsonResponse({"message": "Logged out successfully"}, status=200)
+        return Response({"message": "Logged out successfully"}, status=200)
 
-    return JsonResponse({"message": "Method not allowed"}, status=405)
-
-@csrf_exempt
+@api_view(["GET"])
+@permission_classes([AllowAny])
 def check_connection(request):
-    return JsonResponse({"message": "Electron-Django connection successful!"}, status=200)
+    return Response({"message": "Electron-Django connection successful!"})
 
-# @api_view(['GET'])
-# def get_users(request):
-#     users = UserData.objects.all()
-#     serializer = UserDataSerializer(users, many=True)
-#     return Response(serializer.data)
-
+@api_view(["GET"])
+@permission_classes([AllowAny])
 def test_api(request):
-    return JsonResponse({"message": "Hello from Django!"})
-
-# @api_view(['POST'])
-# def create_message(request):
-#     serializer = UserDataSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response({"message": "Message saved successfully!"}, status=201)
-#     return Response(serializer.errors, status=400)
-
-
-# def login_view(request):
-#     if request.method == "POST":
-#         try:
-#             data = json.loads(request.body)
-#             username = data.get("username")
-#             password = data.get("password")
-
-#             if username == "admin" and password == "password123":  # Replace with actual authentication logic
-#                 return JsonResponse({"message": "Login successful"}, status=200)
-#             else:
-#                 return JsonResponse({"message": "Invalid credentials"}, status=401)
-
-#         except json.JSONDecodeError:
-#             return JsonResponse({"message": "Invalid request format"}, status=400)
-
-#     return JsonResponse({"message": "Method not allowed"}, status=405)
+    return Response({"message": "Hello from Django!"})

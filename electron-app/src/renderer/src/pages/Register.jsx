@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
-import { FaUser } from 'react-icons/fa'
-import { FaLock } from 'react-icons/fa'
+import axios from 'axios' // ✅ Import axios
+import { FaUser, FaLock } from 'react-icons/fa'
 import Logo from '../assets/images/Logo.png'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-function Login(props) {
-  const [formData, setFormData] = useState({ username: '', password: '', confirmpassword: '' })
+function Register() {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    confirmpassword: ''
+  })
+
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -16,15 +20,21 @@ function Login(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (formData.password !== formData.confirmpassword) {
+      alert('Passwords do not match')
+      return
+    }
+
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register/', formData, {
-        headers: { 'Content-Type': 'application/json' }
+      const response = await axios.post('http://127.0.0.1:8000/api/register/', {
+        username: formData.username,
+        password: formData.password
       })
 
       alert(response.data.message)
-      navigate('/login') // Redirect to login page
+      navigate('/login') // ✅ Redirect to login page after success
     } catch (error) {
-      alert('Registration Failed: ' + (error.response?.data.message || 'Server error'))
+      alert('Registration Failed: ' + (error.response?.data.error || 'Server error'))
     }
   }
 
@@ -40,7 +50,9 @@ function Login(props) {
         </div>
       </Link>
       <div className="bg-[rgba(48,48,48,0.3)] border-2 border-[rgba(255,255,255,0.2)] backdrop-blur-[80px] w-[420px] text-white rounded-[10px] p-[30px_40px]">
-        <form action="/register" onSubmit={props.submit} method="POST">
+        <form onSubmit={handleSubmit}>
+          {' '}
+          {/* ✅ FIX: Using correct onSubmit */}
           <h3 className="text-3xl text-center mb-6">Register</h3>
           <div className="relative w-full h-[50px] my-[30px]">
             <input
@@ -49,7 +61,7 @@ function Login(props) {
               name="username"
               placeholder="Username"
               required
-              className="w-full h-full bg-transparent border-none outline-none rounded-[40px] text-base text-white px-[20px] py-[20px] pr-[45px] placeholder-white/50 focus:border-0 focus:border-[rgba(255,255,255,0.2)] focus:outline-white/20"
+              className="w-full h-full bg-transparent border-none outline-none rounded-[40px] text-base text-white px-[20px] py-[20px] pr-[45px] placeholder-white/50"
             />
             <FaUser className="absolute right-5 top-1/2 transform -translate-y-1/2 text-base" />
           </div>
@@ -60,7 +72,7 @@ function Login(props) {
               name="password"
               placeholder="Password"
               required
-              className="w-full h-full bg-transparent border-none outline-none rounded-[40px] text-base text-white px-[20px] py-[20px] pr-[45px] placeholder-white/50 focus:border-0 focus:border-[rgba(255,255,255,0.2)] focus:outline-white/20"
+              className="w-full h-full bg-transparent border-none outline-none rounded-[40px] text-base text-white px-[20px] py-[20px] pr-[45px] placeholder-white/50"
             />
             <FaLock className="absolute right-5 top-1/2 transform -translate-y-1/2 text-base" />
           </div>
@@ -68,31 +80,23 @@ function Login(props) {
             <input
               onChange={handleChange}
               type="password"
-              name="password"
+              name="confirmpassword"
               placeholder="Confirm Password"
               required
-              className="w-full h-full bg-transparent border-none outline-none rounded-[40px] text-base text-white px-[20px] py-[20px] pr-[45px] placeholder-white/50 focus:border-0 focus:border-[rgba(255,255,255,0.2)] focus:outline-white/20"
+              className="w-full h-full bg-transparent border-none outline-none rounded-[40px] text-base text-white px-[20px] py-[20px] pr-[45px] placeholder-white/50"
             />
             <FaLock className="absolute right-5 top-1/2 transform -translate-y-1/2 text-base" />
           </div>
-          <div className="flex justify-between text-[14.5px] -mt-[15px] mb-[15px]">
-            <label className="flex items-center">
-              <input type="checkbox" name="remember" className="mr-1 accent-white" />
-              Remember me
-            </label>
-          </div>
-          <Link to="/Home">
-            <button
-              onClick={handleSubmit}
-              className="w-full h-[45px] bg-white text-black shadow-[0_0_10px_rgba(0,0,0,0.1)] border-none rounded-[40px] text-base font-bold cursor-pointer  hover:scale-105 transition-all duration-300"
-              type="submit"
-            >
-              Register
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className="w-full h-[45px] bg-white text-black shadow-[0_0_10px_rgba(0,0,0,0.1)] border-none rounded-[40px] text-base font-bold cursor-pointer hover:scale-105 transition-all duration-300"
+          >
+            Register
+          </button>
         </form>
       </div>
     </section>
   )
 }
-export default Login
+
+export default Register

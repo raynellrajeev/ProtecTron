@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { FaUser } from 'react-icons/fa'
-import { FaLock } from 'react-icons/fa'
+import { FaUser, FaLock } from 'react-icons/fa'
 import Logo from '../assets/images/Logo.png'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-function Login(props) {
+function Login() {
   const [formData, setFormData] = useState({ username: '', password: '' })
-  const navigate = useNavigate() // To redirect on success
+  const navigate = useNavigate() // ✅ FIXED: Initialize navigate
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -22,11 +21,12 @@ function Login(props) {
       })
 
       alert(response.data.message)
-      navigate('/Home') // Redirect on success
+      navigate('/Home') // ✅ Now this will work correctly
     } catch (error) {
       alert('Login Failed: ' + (error.response?.data.message || 'Server error'))
     }
   }
+
   return (
     <section className="flex flex-col justify-center items-center h-screen">
       <Link to="/Welcome">
@@ -39,7 +39,7 @@ function Login(props) {
         </div>
       </Link>
       <div className="bg-[rgba(48,48,48,0.3)] border-2 border-[rgba(255,255,255,0.2)] backdrop-blur-[80px] w-[420px] text-white rounded-[10px] p-[30px_40px]">
-        <form action="/login" onSubmit={props.submit} method="POST">
+        <form onSubmit={handleSubmit}>
           <h3 className="text-3xl text-center mb-6">Login</h3>
           <div className="relative w-full h-[50px] my-[30px]">
             <input
@@ -72,15 +72,12 @@ function Login(props) {
               Forgot Password?
             </a>
           </div>
-          <Link to="/Home">
-            <button
-              onClick={handleSubmit}
-              className="w-full h-[45px] bg-white text-black shadow-[0_0_10px_rgba(0,0,0,0.1)] border-none rounded-[40px] text-base font-bold cursor-pointer  hover:scale-105 transition-all duration-300"
-              type="submit"
-            >
-              Login
-            </button>
-          </Link>
+          <button
+            className="w-full h-[45px] bg-white text-black shadow-[0_0_10px_rgba(0,0,0,0.1)] border-none rounded-[40px] text-base font-bold cursor-pointer hover:scale-105 transition-all duration-300"
+            type="submit"
+          >
+            Login
+          </button>
           <div className="text-base text-center mt-5 mb-[15px]">
             <p>
               Don't have an account?{' '}
@@ -97,4 +94,5 @@ function Login(props) {
     </section>
   )
 }
+
 export default Login
