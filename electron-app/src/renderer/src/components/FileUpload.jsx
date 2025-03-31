@@ -1,61 +1,61 @@
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { IconUpload } from "@tabler/icons-react";
-import { useDropzone } from "react-dropzone";
+import React, { useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { IconUpload } from '@tabler/icons-react'
+import { useDropzone } from 'react-dropzone'
 
 function cn(...inputs) {
-  return inputs.filter(Boolean).join(" ");
+  return inputs.filter(Boolean).join(' ')
 }
 
 const mainVariant = {
   initial: {
     x: 0,
-    y: 0,
+    y: 0
   },
   animate: {
     x: 20,
     y: -20,
-    opacity: 0.9,
-  },
-};
+    opacity: 0.9
+  }
+}
 
 const secondaryVariant = {
   initial: {
-    opacity: 0,
+    opacity: 0
   },
   animate: {
-    opacity: 1,
-  },
-};
+    opacity: 1
+  }
+}
 
 export const FileUpload = ({ onChange }) => {
-  const [files, setFiles] = useState([]);
-  const fileInputRef = useRef(null);
+  const [files, setFiles] = useState([])
+  const fileInputRef = useRef(null)
 
   const handleFileChange = (newFiles) => {
-    const updatedFiles = [...files, ...newFiles];
-    setFiles(updatedFiles);
-    onChange && onChange(updatedFiles);
-  };
+    const updatedFiles = [...files, ...newFiles]
+    setFiles(updatedFiles)
+    onChange && onChange(updatedFiles)
+  }
 
   const handleClear = (e) => {
-    e.stopPropagation();
-    setFiles([]);
-    onChange && onChange([]);
-  };
+    e.stopPropagation()
+    setFiles([])
+    onChange && onChange([])
+  }
 
   const handleClick = () => {
-    fileInputRef.current?.click();
-  };
+    fileInputRef.current?.click()
+  }
 
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
     noClick: true,
     onDrop: handleFileChange,
     onDropRejected: (error) => {
-      console.log(error);
-    },
-  });
+      console.log(error)
+    }
+  })
 
   return (
     <div className="w-full" {...getRootProps()}>
@@ -188,4 +188,4 @@ export const FileUpload = ({ onChange }) => {
       </motion.div>
     </div>
   )
-};
+}
