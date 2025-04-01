@@ -3,11 +3,12 @@ from django.utils import timezone
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import SystemMetrics
-from .serializers import SystemMetricsSerializer
+from .models import SystemMetrics, DiskUsage
+from .serializers import SystemMetricsSerializer, DiskUsageSerializer
 from .services.monitor_service import monitor
 from datetime import timedelta
-
+from datetime import datetime
+from django.http import JsonResponse
 class SystemMetricsList(generics.ListAPIView):
     serializer_class = SystemMetricsSerializer
 
@@ -43,3 +44,28 @@ class StopMonitoring(APIView):
     def post(self, request):
         monitor.stop()
         return Response({'status': 'Monitoring stopped'})
+
+def get_disk_usage():
+    partitions = []
+    for part in psutil.disk_partitions(all=False):
+        try:
+            usage = psutil.disk_usage(part.mountpoint)
+            partitions.append({
+                'drive': part.device.split('/')[-1],
+                'usage_percent': round(usage.percent, 2),
+                'total_space': usage.total,
+                'used_space': usage.used,
+                'timestamp': datetime.now().isoformat()
+            })
+        except Exception as e:
+            continue
+    return partitions
+
+class DiskUsageList(generics.ListCreateAPIView):
+    queryset = DiskUsage.objects.all()
+    serializer_class = DiskUsageSerializer
+
+class CurrentDiskUsage(generics.GenericAPIView):
+    def get(self, request):
+        partitions = get_disk_usage()
+        return JsonResponse({'partitions': partitions})
