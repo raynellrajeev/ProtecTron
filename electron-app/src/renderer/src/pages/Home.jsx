@@ -46,10 +46,10 @@ export default function Home() {
             <p className="text-[min(1.5vw,1rem)] text-center pb-4">System Health</p>
           </div>
         </div>
-        <div className="col-span-4 row-start-2 row-span-3 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 p-4 overflow-x-hidden overflow-y-scroll" >
+        <div className="col-span-4 row-start-2 row-span-3 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 p-4 overflow-x-hidden overflow-y-scroll">
           <Stack direction={'column'} spacing={{ xs: 1, sm: 2, md: 4 }} className="w-full">
-            <SimpleAreaChart label="CPU" color="#2196F3" />
-            <SimpleAreaChart label="Memory" color="lightgreen" />
+            <SimpleAreaChart label="CPU Usage (%)" color="#8884d8" metricType="cpu" />
+            <SimpleAreaChart label="Memory Usage (%)" color="#82ca9d" metricType="memory" />
           </Stack>
         </div>
         <div className="col-span-2 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
