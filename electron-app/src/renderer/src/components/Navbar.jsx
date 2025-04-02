@@ -90,7 +90,7 @@ export default function Navbar() {
   const navLinks = [
     { path: '/Home', label: 'Home' },
     { path: '/Scan', label: 'Scan' },
-    { path: '/Quiz', label: 'Learn' },
+    { path: '/Learn', label: 'Learn' },
     { path: '/Settings', label: 'Settings' }
   ]
 
