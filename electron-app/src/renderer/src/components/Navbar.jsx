@@ -9,6 +9,7 @@ import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary, { accordionSummaryClasses } from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
+import { useAuth } from '../context/AuthContext'
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -79,7 +80,7 @@ const StyledTypography = styled(Typography)(({ variant }) => ({
 }))
 
 export default function Navbar() {
-  const [username, setUsername] = useState('John Doe')
+  const { user, logout } = useAuth()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expanded, setExpanded] = useState()
 
@@ -132,7 +133,7 @@ export default function Navbar() {
 
         {/* Profile Dropdown */}
         <div className="hidden md:block">
-          <Dropdown username={username} />
+          <Dropdown username={user?.username || 'User'} />
         </div>
 
         {/* Mobile Menu Dropdown */}
@@ -155,7 +156,7 @@ export default function Navbar() {
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                     <StyledTypography variant="header" component="span">
-                      <strong>{username}</strong>
+                      <strong>{user.username}</strong>
                     </StyledTypography>
                   </AccordionSummary>
                   <AccordionDetails>

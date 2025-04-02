@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import { Avatar } from '@mui/material'
 import { styled } from '@mui/material/styles'
@@ -7,6 +7,7 @@ import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary, { accordionSummaryClasses } from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
+import { useAuth } from '../context/AuthContext'
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -77,25 +78,24 @@ const StyledTypography = styled(Typography)(({ variant }) => ({
 }))
 
 export default function Profile() {
+  const { user, logout } = useAuth()
+  useEffect(() => {
+    console.log('User updated:', user)
+  }, [user])
+
   const [expanded, setExpanded] = useState()
-  const [profile, setProfile] = useState({
-    username: 'username',
-    password: 'root',
-    email: 'Your mail ID',
-    number: 'Your mobile no.'
-  })
+
   const [profileInput, setProfileInput] = useState({
-    username: '',
+    username: user?.username || '',
     password: '',
     email: '',
     number: ''
   })
 
   function handleClick(event) {
+    event.preventDefault()
     const { value, name } = event.target
     console.log(name, value)
-    setProfile(profileInput)
-      event.preventDefault()
   }
   function handleInput(event) {
     const { value, name } = event.target
@@ -125,9 +125,13 @@ export default function Profile() {
               }}
             />
             <div className="text-xl md:text-2xl lg:text-3xl font-bold text-center md:text-left">
-              {profile.username}
-              <div className="text-m md:text-lg lg:text-xl text-gray-400">{profile.email}</div>
-              <div className="text-m md:text-lg lg:text-xl text-gray-400">{profile.number}</div>
+              {user?.username || 'User'}
+              <div className="text-m md:text-lg lg:text-xl text-gray-400">
+                {profileInput.email || 'Your mail ID'}
+              </div>
+              <div className="text-m md:text-lg lg:text-xl text-gray-400">
+                {profileInput.number || 'Your mobile no.'}
+              </div>
             </div>
           </div>
           <div className="mt-8 md:mt-12 lg:mt-16 space-y-4">

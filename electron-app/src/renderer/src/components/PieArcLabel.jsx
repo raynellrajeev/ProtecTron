@@ -166,7 +166,7 @@ export default function DiskUsagePieChart() {
           }
         }}
       />
-      <div className="flex  lg:flex-col justify-between items-center m-4">
+      <div className="flex lg:flex-col justify-between items-center m-4">
         <p className='text-white'>Disk Usage</p>
         {lastUpdated && <p className='text-end text-white/70'>Last updated: {lastUpdated}</p>}
       </div>
