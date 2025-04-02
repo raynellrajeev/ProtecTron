@@ -41,9 +41,9 @@ export default function Home() {
         <div className="col-span-2 row-start-1 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto no-scrollbar">
           <div className="flex flex-col w-full h-full">
             <div className="flex-1 flex items-center justify-center">
-              <CircularProgressWithLabel value={80} />
+              <CircularProgressWithLabel  />
             </div>
-            <p className="text-[min(1.5vw,1rem)] text-center pb-4">System Health</p>
+            <p className="text-[min(1.5vw,1rem)] text-center text-white pb-4">System Health</p>
           </div>
         </div>
         <div className="col-span-4 row-start-2 row-span-3 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 p-4 overflow-x-hidden overflow-y-scroll">
