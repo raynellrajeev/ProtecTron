@@ -30,8 +30,6 @@ function Register() {
         username: formData.username,
         password: formData.password
       })
-
-      alert(response.data.message)
       navigate('/login') // ✅ Redirect to login page after success
     } catch (error) {
       alert('Registration Failed: ' + (error.response?.data.error || 'Server error'))
