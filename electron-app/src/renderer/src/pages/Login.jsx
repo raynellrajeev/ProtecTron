@@ -3,10 +3,12 @@ import { FaUser, FaLock } from 'react-icons/fa'
 import Logo from '../assets/images/Logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
-function Login() {
+export default function Login() {
   const [formData, setFormData] = useState({ username: '', password: '' })
-  const navigate = useNavigate() 
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -19,7 +21,12 @@ function Login() {
       const response = await axios.post('http://127.0.0.1:8000/api/login/', formData, {
         headers: { 'Content-Type': 'application/json' }
       })
-      navigate('/Home') 
+      const userData = {
+        username: formData.username,
+        ...response.data // Include any other data from the response
+      }
+      login(userData) // Store in context
+      navigate('/Home')
     } catch (error) {
       alert('Login Failed: ' + (error.response?.data.message || 'Invalid Credentials'))
     }
@@ -92,5 +99,3 @@ function Login() {
     </section>
   )
 }
-
-export default Login
