@@ -10,6 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('output').innerText = JSON.stringify(data, null, 2)
   } catch (error) {
     console.error('Fetch error:', error)
-    document.getElementById('output').innerText = `Error fetching data: ${error.message}`
+    // document.getElementById('output').innerText = `Error fetching data: ${error.message}`
   }
 })

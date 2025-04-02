@@ -7,9 +7,9 @@ import Welcome from './pages/Welcome'
 import Register from './pages/Register'
 import Scan from './pages/Scan'
 import Settings from './pages/Settings'
-import Quiz from './pages/Quiz'
 import { DateProvider } from './context/DateContext'
 import React from 'react'
+import Learn from './pages/Learn'
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Route path="/Welcome" element={<Welcome />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Scan" element={<Scan />} />
-          <Route path="/Quiz" element={<Quiz />} />
+          <Route path="/Learn" element={<Learn />} />
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Home" element={<Home />} />

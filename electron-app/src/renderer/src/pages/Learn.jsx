@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 import { styled } from '@mui/material/styles'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress'
 
-export default function Quiz() {
+export default function Learn() {
   const quizItems = [
     { id: 'Course 1', score: 0 },
     { id: 'Course 2', score: 0 },
