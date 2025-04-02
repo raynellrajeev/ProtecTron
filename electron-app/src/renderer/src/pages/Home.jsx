@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import PieArcLabel from '../components/PieArcLabel'
 import CircularProgressWithLabel from '../components/Progress'
@@ -41,7 +41,7 @@ export default function Home() {
         <div className="col-span-2 row-start-1 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto no-scrollbar">
           <div className="flex flex-col w-full h-full">
             <div className="flex-1 flex items-center justify-center">
-              <CircularProgressWithLabel value={70} />
+              <CircularProgressWithLabel value={80} />
             </div>
             <p className="text-[min(1.5vw,1rem)] text-center pb-4">System Health</p>
           </div>

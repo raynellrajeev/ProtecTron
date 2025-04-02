@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (SystemMetricsList, CurrentSystemMetrics, 
-                   StartMonitoring, StopMonitoring, DiskUsageList, CurrentDiskUsage)
+                   StartMonitoring, StopMonitoring, DiskUsageList, CurrentDiskUsage,)
 
 urlpatterns = [
     path('metrics/', SystemMetricsList.as_view(), name='metrics-list'),

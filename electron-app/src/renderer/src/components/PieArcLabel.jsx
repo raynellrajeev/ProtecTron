@@ -64,7 +64,7 @@ export default function DiskUsagePieChart() {
 
   if (loading && diskData.length === 0) {
     return (
-      <Box display="flex" justifyContent="center" p={4}>
+      <Box display="flex" justifyContent="center" p={2}>
         <CircularProgress />
       </Box>
     )
@@ -85,9 +85,6 @@ export default function DiskUsagePieChart() {
 
   return (
     <Box sx={{ p: 2 }}>
-      <p>Disk Usage</p>
-      {lastUpdated && <p>Last updated: {lastUpdated}</p>}
-
       <PieChart
         series={[
           {
@@ -102,8 +99,8 @@ export default function DiskUsagePieChart() {
             }
           }
         ]}
-        width={250}
-        height={250}
+        width={350}
+        height={200}
         slotProps={{
           legend: {
             labelStyle: {
@@ -118,6 +115,10 @@ export default function DiskUsagePieChart() {
           }
         }}
       />
+      <div className="flex  justify-between items-center m-4">
+        <p>Disk Usage</p>
+        {lastUpdated && <p>Last updated: {lastUpdated}</p>}
+      </div>
     </Box>
   )
 }
