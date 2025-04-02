@@ -3,6 +3,7 @@ import { FaUser, FaLock } from 'react-icons/fa'
 import Logo from '../assets/images/Logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Alert from '@mui/material/Alert'
 
 function Login() {
   const [formData, setFormData] = useState({ username: '', password: '' })
@@ -19,11 +20,9 @@ function Login() {
       const response = await axios.post('http://127.0.0.1:8000/api/login/', formData, {
         headers: { 'Content-Type': 'application/json' }
       })
-
-      alert(response.data.message)
-      navigate('/Home') // ✅ Now this will work correctly
+      navigate('/Home') 
     } catch (error) {
-      alert('Login Failed: ' + (error.response?.data.message || 'Server error'))
+      alert('Login Failed: ' + (error.response?.data.message || 'Invalid Credentials'))
     }
   }
 
