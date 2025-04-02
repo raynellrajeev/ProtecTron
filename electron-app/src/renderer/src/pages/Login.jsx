@@ -3,11 +3,10 @@ import { FaUser, FaLock } from 'react-icons/fa'
 import Logo from '../assets/images/Logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Alert from '@mui/material/Alert'
 
 function Login() {
   const [formData, setFormData] = useState({ username: '', password: '' })
-  const navigate = useNavigate() // ✅ FIXED: Initialize navigate
+  const navigate = useNavigate() 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
