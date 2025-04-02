@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import axios from 'axios'
+import { useMediaQuery } from '@mui/material'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/',
@@ -14,11 +14,57 @@ const api = axios.create({
 })
 
 export default function DiskUsagePieChart() {
+  const containerRef = useRef(null)
   const theme = useTheme()
   const [diskData, setDiskData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
+  const [chartSize, setChartSize] = useState({ width: 350, height: 200 })
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+
+  useEffect(() => {
+    const updateSize = () => {
+      if (isMobile) {
+        setChartSize({ width: 200, height: 100 })
+      } else if (isTablet) {
+        setChartSize({ width: 200, height: 100 })
+      } else {
+        setChartSize({ width: 250, height: 200 })
+      }
+    }
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [isMobile, isTablet, isDesktop])
+
+  React.useEffect(() => {
+    const updateSize = () => {
+      if (containerRef.current) {
+        const container = containerRef.current
+        const containerWidth = container.offsetWidth
+        const containerHeight = container.offsetHeight
+        const minDimension = Math.min(containerWidth, containerHeight)
+        setSize(minDimension * 0.7)
+      }
+    }
+
+    updateSize()
+    const resizeObserver = new ResizeObserver(updateSize)
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current)
+    }
+
+    return () => resizeObserver.disconnect()
+  }, [])
+
+  const getFontSize = () => {
+    if (isMobile) return size * 0.1
+    if (isTablet) return size * 0.13
+    return size * 0.15
+  }
 
   const fetchDiskUsage = async () => {
     try {
@@ -84,7 +130,7 @@ export default function DiskUsagePieChart() {
   }
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box ref={containerRef} sx={{ p: 2 }}>
       <PieChart
         series={[
           {
@@ -99,25 +145,30 @@ export default function DiskUsagePieChart() {
             }
           }
         ]}
-        width={350}
-        height={200}
+        {...chartSize}
         slotProps={{
           legend: {
             labelStyle: {
-              fill: theme.palette.common.white
-            }
+              fill: theme.palette.common.white,
+              fontSize: isMobile ? 12 : 14
+            },
+            itemMarkWidth: isMobile ? 10 : 12,
+            itemMarkHeight: isMobile ? 10 : 12,
+            markGap: isMobile ? 5 : 7,
+            itemGap: isMobile ? 10 : 15
           }
         }}
         sx={{
           [`& .${pieArcLabelClasses.root}`]: {
             fill: theme.palette.common.white,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            fontSize: isMobile ? 12 : 14
           }
         }}
       />
-      <div className="flex  justify-between items-center m-4">
-        <p>Disk Usage</p>
-        {lastUpdated && <p>Last updated: {lastUpdated}</p>}
+      <div className="flex  lg:flex-col justify-between items-center m-4">
+        <p className='text-white'>Disk Usage</p>
+        {lastUpdated && <p className='text-end text-white/70'>Last updated: {lastUpdated}</p>}
       </div>
     </Box>
   )
