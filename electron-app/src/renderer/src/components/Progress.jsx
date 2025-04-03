@@ -28,7 +28,7 @@ export default function SystemHealthIndicator() {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
 
   // Responsive sizing
-  React.useEffect(() => {
+  useEffect(() => {
     const updateSize = () => {
       if (containerRef.current) {
         const container = containerRef.current
