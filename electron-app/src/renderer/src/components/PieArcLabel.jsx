@@ -40,7 +40,7 @@ export default function DiskUsagePieChart() {
     return () => window.removeEventListener('resize', updateSize)
   }, [isMobile, isTablet, isDesktop])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateSize = () => {
       if (containerRef.current) {
         const container = containerRef.current
@@ -59,7 +59,22 @@ export default function DiskUsagePieChart() {
 
     return () => resizeObserver.disconnect()
   }, [])
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        setChartWidth(containerRef.current.offsetWidth - 32)
+      }
+    }
 
+    updateDimensions()
+    window.addEventListener('resize', updateDimensions)
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions)
+    }
+  }, [])
+
+  
   const getFontSize = () => {
     if (isMobile) return size * 0.1
     if (isTablet) return size * 0.13
