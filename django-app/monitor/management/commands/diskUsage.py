@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 from monitor.models import DiskUsage
 import psutil
-from datetime import datetime
 
 class Command(BaseCommand):
     help = 'Collect disk usage statistics'

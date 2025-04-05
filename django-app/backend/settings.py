@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     # Custom apps
     'api',
     'monitor',
+    'scan',
 ]
 
 MIDDLEWARE = [
@@ -89,13 +90,20 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOW_HEADERS = [
-    "authorization",
-    "content-type",
-    "x-csrf-token",
-    "accept",
-    "origin",
-    "user-agent",
-    "x-requested-with",
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',  # Add this line
+    'x-requested-with',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
 ]
 
 REST_FRAMEWORK = {
@@ -155,7 +163,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+# Required for CSRF to work with React
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = False  # Allows JavaScript to read the cookie
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -178,3 +188,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
