@@ -58,7 +58,7 @@ const api = createApiInstance()
 export default function SystemMetricsChart({ metricType, color }) {
 
   const containerRef = useRef(null)
-  const [chartWidth, setChartWidth] = useState(850)
+  const [chartWidth, setChartWidth] = useState(900)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
