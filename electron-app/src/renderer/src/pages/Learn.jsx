@@ -6,7 +6,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 
 export default function Learn() {
   const quizItems = [
-    { id: 'Course 1', score: 6 },
+    { id: 'Course 1', score: 0 },
     { id: 'Course 2', score: 0 },
     { id: 'Course 3', score: 0 },
     { id: 'Course 4', score: 0 }

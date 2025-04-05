@@ -21,7 +21,6 @@ export default function DiskUsagePieChart() {
   const [error, setError] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
   const [chartSize, setChartSize] = useState({ width: 350, height: 200 })
-  const [chartWidth, setChartWidth] = useState(200)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
