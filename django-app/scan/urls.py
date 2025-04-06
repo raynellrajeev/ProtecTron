@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from .views import start_watching, stop_watching, get_changes
 
 urlpatterns = [
-    path('start/', views.start_watch, name='start_watch'),
-    path('stop/', views.stop_watch, name='stop_watch'),
-    path('csrf/', views.get_csrf, name='get_csrf'),
+    path('start/', start_watching, name='start-watch'),
+    path('stop/', stop_watching, name='stop-watch'),
+    path('changes/', get_changes, name='file-changes'),
 ]
