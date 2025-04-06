@@ -83,9 +83,14 @@ export default function useFileChanges() {
 
     return () => clearInterval(interval)
   }, [isWatching])
-  
-  const clearLogs = () => {
-    setChanges([])
+
+  const clearLogs = async () => {
+    try {
+      await axios.post(`${API_BASE}/clear/`)
+      setChanges([])
+    } catch (error) {
+      handleApiError(error)
+    }
   }
 
   return {
@@ -95,11 +100,7 @@ export default function useFileChanges() {
     isLoading,
     startWatching,
     stopWatching,
-    refresh: async () => {
-      setChanges([]) // Clear before re-fetching
-      return fetchChanges()
-    },
+    refresh: fetchChanges,
     clearLogs
   }
-
 }

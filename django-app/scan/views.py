@@ -6,6 +6,7 @@ from .models import FileChange
 from .serializers import FileChangeSerializer
 import os
 
+# scan/views.py
 @api_view(['POST'])
 def start_watching(request):
     scan_path = request.data.get('path')
@@ -17,7 +18,8 @@ def start_watching(request):
         )
     
     try:
-        # Just return success for now - actual watching handled by management command
+        from .watchdog import start_watching as start_watch
+        start_watch(scan_path)  # Start the observer
         return Response({"status": f"Watching {scan_path}"})
     except Exception as e:
         return Response(
@@ -28,7 +30,12 @@ def start_watching(request):
 @api_view(['POST'])
 def stop_watching(request):
     scan_path = request.data.get('path')
-    return Response({"status": f"Stopped watching {scan_path}"})
+    try:
+        from .watchdog import stop_watching as stop_watch
+        stop_watch(scan_path)  # Stop the observer
+        return Response({"status": f"Stopped watching {scan_path}"})
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
 def get_changes(request):
@@ -47,3 +54,10 @@ def get_changes(request):
             {"error": str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+@api_view(['POST'])
+def clear_logs(request):
+    try:
+        FileChange.objects.all().delete()
+        return Response({'message': 'Logs cleared'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

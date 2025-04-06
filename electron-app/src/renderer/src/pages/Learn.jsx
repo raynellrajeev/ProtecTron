@@ -85,6 +85,7 @@ export default function Learn() {
                     Completed: <span className="text-green-600">{score}/10</span>
                   </p>
                   <button
+                    
                     className={
                       'text-sm px-3 py-1 rounded-full transition-colors bg-[#2196F3] text-white'
                     }

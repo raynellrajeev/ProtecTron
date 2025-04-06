@@ -1,6 +1,6 @@
-import time
-import os
-import threading
+import django, time, os, threading
+django.setup()
+
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from django.db import transaction
@@ -11,7 +11,7 @@ active_observers = {}
 class FileChangeHandler(FileSystemEventHandler):
     def __init__(self, scan_path):
         self.scan_path = scan_path
-        self.excluded_extensions = ['.tmp', '.swp', '.swx', '.swpx', '-journal']
+        self.excluded_extensions = ['.tmp', '.swp', '.swx', '.swpx', '-journal','.sqlite3-journal','.db.sqlite', '.db.sqlite3', '.db.sqlite3-journal']
         self.excluded_keywords = ['~', '.git']
 
     def _should_process(self, event):
@@ -23,6 +23,10 @@ class FileChangeHandler(FileSystemEventHandler):
 
         if any(keyword in path for keyword in self.excluded_keywords):
             print(f"Excluded by keyword: {event.src_path}")
+            return False
+        
+        if 'db.sqlite' in os.path.basename(path):
+            print(f"Excluded SQLite file: {event.src_path}")
             return False
 
         print(f"Processing: {event.src_path} (Directory: {event.is_directory})")

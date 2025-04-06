@@ -121,7 +121,7 @@ const FileChangeLogs = () => {
                   boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
                 }}
                 className={`px-4 py-2 h-auto text-black rounded-full md:rounded-3xl sm:rounded-xl ${
-                  isLoading ? 'bg-gray-400' : 'bg-red-500 hover:bg-red-600'
+                  isLoading ? 'bg-gray-400' : 'bg-red-600 '
                 }`}
                 disabled={isLoading}
               >
@@ -151,11 +151,17 @@ const FileChangeLogs = () => {
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <h2 className="text-md font-medium">Recent Changes:</h2>
-              <span className="text-sm text-gray-500">{isWatching ? 'Active' : 'Inactive'}</span>
+              <span
+                className={`text-sm text-gray-500 ${isWatching ? 'text-green-500' : 'text-red-500'}`}
+              >
+                {isWatching ? 'Active' : 'Inactive'}
+              </span>
             </div>
 
             {changes.length === 0 ? (
-              <p className="text-gray-500">No changes detected yet</p>
+              <p className="text-gray-500">
+                {isWatching ? 'No changes detected yet' : 'Enter a path and start watching'}
+              </p>
             ) : (
               changes.map((change) => (
                 <div
