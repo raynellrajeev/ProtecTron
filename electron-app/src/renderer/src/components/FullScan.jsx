@@ -44,16 +44,7 @@ export default function FullScanButton(props) {
     zIndex
   }
 
-  const progressStyle = {
-    position: 'absolute',
-    inset: 0, // This replaces top, left, right, bottom
-    width: '200%',
-    height: '200%',
-    background: 'rgba(33, 150, 243, 0.2)',
-    transition: 'transform 1.5s linear',
-    transform: `scaleX(${boostPercentage / 100})`,
-    transformOrigin: 'left',
-  }
+
 
   const handleBoost = () => {
     if (!isBoosting) {
@@ -105,7 +96,7 @@ export default function FullScanButton(props) {
         whileTap={{ scale: 0.95 }}
         className="flex flex-col items-center justify-center relative overflow-hidden"
       >
-        <div style={progressStyle} />
+        
         <div className="relative z-10 flex flex-col items-center justify-center">
           <LanguageRoundedIcon
             sx={{

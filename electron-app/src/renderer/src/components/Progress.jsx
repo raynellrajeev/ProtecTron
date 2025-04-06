@@ -57,7 +57,7 @@ export default function SystemHealthIndicator() {
   const calculateHealthScore = (cpu, memory, disk) => {
     // Weighted average with inverted score (higher usage = lower health)
     const weights = { cpu: 0.4, memory: 0.4, disk: 0.2 }
-    return (100 - (cpu * weights.cpu + memory * weights.memory + disk * weights.disk))
+    return (100 - (cpu * weights.cpu + memory * weights.memory + disk * weights.disk)).toFixed(2)
   }
 
   const fetchSystemHealth = async () => {

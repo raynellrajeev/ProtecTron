@@ -6,9 +6,30 @@ import { Stack } from '@mui/material'
 import SimpleAreaChart from '../components/Graph'
 import RAMBoostButton from '../components/RamBoosterButton'
 import { useDate } from '../context/DateContext'
+import { useAuth } from '../context/AuthContext'
 
 export default function Home() {
   const { date } = useDate()
+  const { user, logout } = useAuth()
+  useEffect(() => {
+    console.log('User updated:', user)
+  }, [user])
+  const username = user.username
+
+  function getGreeting() {
+    const hour = new Date().getHours()
+
+    if (hour < 12) {
+      return 'Good morning'
+    } else if (hour < 17) {
+      return 'Good afternoon'
+    } else if (hour < 21) {
+      return 'Good evening'
+    } else {
+      return 'Hello'
+    }
+  }
+
 
   return (
     <div className="h-screen">
@@ -16,18 +37,20 @@ export default function Home() {
       <div className="grid grid-cols-6 grid-rows-4 gap-4 border-0 bg-transparent pt-24 p-12 h-full w-full max-w-screen max-h-screen-lg min-h-screen overflow-hidden">
         <div className="col-span-3 row-span-1 border-2 rounded-2xl flex items-center  justify-start bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
           <div className="p-2flex flex-col justify-center w-full">
+            <p className="text-[min(2.5vw,1.875rem)] font-bold text-white pt-2 px-[5%]">
+              {getGreeting()}, {username}!
+            </p>
             <div className="flex gap-2 items-center px-[5%]">
-              <h1 className="text-[min(2.5vw,1.875rem)] font-bold text-white">
+              <h1 className="text-[min(1.75vw,1.25rem)]  text-white">
                 Protection Status:
-                <span className="text-[min(3vw,2.25rem)] font-bold text-[#008000] pl-2">safe</span>
+                <span className="text-[min(2vw,1.5rem)]  text-[#008000] pl-2">safe</span>
               </h1>
             </div>
             {date ? (
-              <p className="text-[min(1.5vw,1rem)] pt-2 px-[5%]">Last scanned : {date}</p>
+              <p className="text-[min(1.75vw,1.25rem)] pt-2 px-[5%]">Last scanned : {date}</p>
             ) : (
-              <p className="text-[min(1.5vw,1rem)] pt-2 px-[5%]">Go to Scan page to scan.</p>
+              <p className="text-[min(1.75vw,1.25rem)] pt-2 px-[5%]">Go to Scan page to scan.</p>
             )}
-            <p className="text-[min(1.5vw,1rem)] pt-2 px-[5%]">Threats found : 0</p>
           </div>
         </div>
         <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25">
@@ -41,7 +64,7 @@ export default function Home() {
         <div className="col-span-2 row-start-1 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto no-scrollbar">
           <div className="flex flex-col w-full h-full">
             <div className="flex-1 flex items-center justify-center">
-              <CircularProgressWithLabel  />
+              <CircularProgressWithLabel />
             </div>
             <p className="text-[min(1.5vw,1rem)] text-center text-white pb-4">System Health</p>
           </div>

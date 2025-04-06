@@ -11,7 +11,7 @@ export default function Home() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
-
+  const Threats = 0
   const API_BASE = 'http://localhost:8000/api/watch'
 
   const getResponsiveSize = () => {
@@ -19,6 +19,13 @@ export default function Home() {
     if (isTablet) return { width: '120px', height: '35px', fontSize: '16px' }
     return { width: '140px', height: '40px', fontSize: '18px' }
   }
+  function getThreatColor(threats) {
+    if (threats === 0) return 'text-green-400'
+    if (threats <= 3) return 'text-yellow-400'
+    if (threats <= 10) return 'text-orange-400'
+    return 'text-red-500'
+  }
+
 
   const handleFileUpload = (files) => {
     setFiles(files)
@@ -28,7 +35,7 @@ export default function Home() {
   return (
     <div className="h-screen">
       <Navbar />
-      <div className="grid grid-cols-[1.5fr,0.5fr,0.8fr,1.2fr] grid-rows-[1.3fr,0.7fr,1fr] gap-4 border-0 bg-transparent pt-24 p-12 h-full w-full max-w-screen max-h-screen-lg min-h-screen overflow-hidden">
+      <div className="grid grid-cols-[1.5fr,0.5fr,0.8fr,1.2fr] grid-rows-[0.7fr,0.7fr,1fr] gap-4 border-0 bg-transparent pt-24 p-12 h-full w-full max-w-screen max-h-screen-lg min-h-screen overflow-hidden">
         <div className="col-span-1 row-span-3 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
           <div className="flex flex-col justify-start text-center items-stretch p-4  box-border w-full h-full overflow-y-scroll  no-scrollbar">
             <div>
@@ -38,12 +45,12 @@ export default function Home() {
           </div>
         </div>
         <div className="col-span-2 row-span-1 border-2 rounded-2xl flex flex-col items-center justify-between bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar p-4">
-          {/* folder scan */}
-          
-        </div>
-        <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar">
-          {/* Full scan */}
           <FullScanButton title="Full Scan" />
+        </div>
+        <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar flex-col">
+          <span className="text-center font-semibold text-xl">Threats Detected:</span>
+          &nbsp;
+          <p className={`${getThreatColor(Threats)} text-center font-semibold text-4xl`}>{Threats}</p>
         </div>
         <div className="col-span-3 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-x-hidden overflow-y-scroll">
           <FileUpload onChange={handleFileUpload} />
