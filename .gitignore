@@ -5,3 +5,4 @@ db.sqlite3
 *.pyc
 *.pyo
 django-app/db.sqlite3
+malware_detection/malware_model.h5
