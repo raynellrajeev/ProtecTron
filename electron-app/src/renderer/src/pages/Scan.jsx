@@ -54,7 +54,7 @@ export default function Home() {
         </div>
         <div className="col-span-3 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-x-hidden overflow-y-scroll">
           <FileUpload
-            onChange={(files) => setUploadedFiles(files)}
+            onChange={handleFileUpload}
             onThreatCountChange={(count) => setThreatCount(count)}
           />
         </div>
