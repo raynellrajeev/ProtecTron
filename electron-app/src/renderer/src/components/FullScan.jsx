@@ -44,8 +44,6 @@ export default function FullScanButton(props) {
     zIndex
   }
 
-
-
   const handleBoost = () => {
     if (!isBoosting) {
       setIsBoosting(true)
@@ -96,7 +94,6 @@ export default function FullScanButton(props) {
         whileTap={{ scale: 0.95 }}
         className="flex flex-col items-center justify-center relative overflow-hidden"
       >
-        
         <div className="relative z-10 flex flex-col items-center justify-center">
           <LanguageRoundedIcon
             sx={{

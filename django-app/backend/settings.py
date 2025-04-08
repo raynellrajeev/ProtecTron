@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'api',
     'monitor',
     'scan',
+    'malware_detection',
 ]
 
 MIDDLEWARE = [
@@ -183,7 +184,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'malware_detection')]
+# Increase upload limits (10MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 10  # 10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 10
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

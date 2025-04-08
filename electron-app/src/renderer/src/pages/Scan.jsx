@@ -8,10 +8,10 @@ import FileChangeLogs from '../components/FileChangeLog'
 
 export default function Home() {
   const [files, setFiles] = useState([])
+  const [threatCount, setThreatCount] = useState(0)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
-  const Threats = 0
   const API_BASE = 'http://localhost:8000/api/watch'
 
   const getResponsiveSize = () => {
@@ -21,16 +21,14 @@ export default function Home() {
   }
   function getThreatColor(threats) {
     if (threats === 0) return 'text-green-400'
-    if (threats <= 3) return 'text-yellow-400'
-    if (threats <= 10) return 'text-orange-400'
+    if (threats <= 2) return 'text-orange-500'
+    if (threats <= 3) return 'text-red-500'
     return 'text-red-500'
   }
 
-
   const handleFileUpload = (files) => {
     setFiles(files)
-    console.log(files);
-    
+    console.log(files)
   }
   return (
     <div className="h-screen">
@@ -50,10 +48,15 @@ export default function Home() {
         <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar flex-col">
           <span className="text-center font-semibold text-xl">Threats Detected:</span>
           &nbsp;
-          <p className={`${getThreatColor(Threats)} text-center font-semibold text-4xl`}>{Threats}</p>
+          <p className={`${getThreatColor(threatCount)} text-center font-semibold text-4xl`}>
+            {threatCount}
+          </p>
         </div>
         <div className="col-span-3 row-span-2 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-x-hidden overflow-y-scroll">
-          <FileUpload onChange={handleFileUpload} />
+          <FileUpload
+            onChange={(files) => setUploadedFiles(files)}
+            onThreatCountChange={(count) => setThreatCount(count)}
+          />
         </div>
       </div>
     </div>

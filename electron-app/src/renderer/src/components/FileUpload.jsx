@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { IconUpload } from '@tabler/icons-react'
 import { useDropzone } from 'react-dropzone'
+import axios from 'axios'
 
 function cn(...inputs) {
   return inputs.filter(Boolean).join(' ')
@@ -28,9 +29,72 @@ const secondaryVariant = {
   }
 }
 
-export const FileUpload = ({ onChange }) => {
+export const FileUpload = ({ onChange, onThreatCountChange, onClear }) => {
   const [files, setFiles] = useState([])
+  const [threatCount, setThreatCount] = useState(0)
+  const [scanResults, setScanResults] = useState(null)
+  const [isScanning, setIsScanning] = useState(false)
   const fileInputRef = useRef(null)
+  const API_BASE = 'http://127.0.0.1:8000'
+
+  const handleScan = async (e) => {
+    e.stopPropagation()
+    if (files.length === 0) return
+
+    setIsScanning(true)
+    try {
+      const formData = new FormData()
+      const latestFile = files[files.length - 1]
+      formData.append('file', latestFile)
+
+      const response = await axios.post(`${API_BASE}/api/malware/scan/file/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log(response.data)
+      const isMalicious = response.data.is_malicious
+      const confidenceValue = response.data?.confidence
+      let formattedConfidence = 'N/A'
+
+      if (confidenceValue !== undefined && confidenceValue !== null) {
+        if (typeof confidenceValue === 'string') {
+          formattedConfidence = confidenceValue.includes('%')
+            ? confidenceValue
+            : `${(parseFloat(confidenceValue) * 100).toFixed(2)}%`
+        } else if (!isNaN(confidenceValue)) {
+          formattedConfidence = `${(parseFloat(confidenceValue) * 100).toFixed(2)}%`
+        }
+      }
+      setScanResults({
+        file: response.data.original_filename,
+        tempFile: response.data.file,
+        status: response.data.is_malicious ? 'MALICIOUS' : 'CLEAN',
+        confidence: formattedConfidence,
+        error: null
+      })
+      if (isMalicious) {
+        setThreatCount((prev) => {
+          const newCount = prev + 1
+          if (onThreatCountChange) {
+            onThreatCountChange(newCount)
+          }
+          return newCount
+        })
+      }
+    } catch (error) {
+      console.error('Full error details:', {
+        message: error.message,
+        response: error.response?.data,
+        config: error.config
+      })
+      setScanResults({
+        error: error.response?.data?.error || error.message || 'Scan failed (check console)'
+      })
+    } finally {
+      setIsScanning(false)
+    }
+  }
 
   const handleFileChange = (newFiles) => {
     const updatedFiles = [...files, ...newFiles]
@@ -41,7 +105,9 @@ export const FileUpload = ({ onChange }) => {
   const handleClear = (e) => {
     e.stopPropagation()
     setFiles([])
+    setScanResults(null)
     onChange && onChange([])
+    onThreatCountChange && onThreatCountChange(0)
   }
 
   const handleClick = () => {
@@ -146,7 +212,7 @@ export const FileUpload = ({ onChange }) => {
                   damping: 20
                 }}
                 className={cn(
-                  'relative group-hover/file:shadow-2xl z-40 bg-white dark:bg-[#2196F3] flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md',
+                  'relative group-hover/file:shadow-2xl z-40 bg-white dark:bg-blue-500 flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md',
                   'shadow-[0px_10px_50px_rgba(0,0,0,0.1)]'
                 )}
               >
@@ -157,10 +223,10 @@ export const FileUpload = ({ onChange }) => {
                     className="text-neutral-600 flex flex-col items-center"
                   >
                     Drop it
-                    <IconUpload className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
+                    <IconUpload className="h-4 w-4 text-white" />
                   </motion.p>
                 ) : (
-                  <IconUpload className="h-4 w-4 text-neutral-600 dark:text-neutral-300" />
+                  <IconUpload className="h-4 w-4 text-white" />
                 )}
               </motion.div>
             )}
@@ -176,14 +242,44 @@ export const FileUpload = ({ onChange }) => {
 
         {/* Clear Button (Conditional Rendering) */}
         {files.length > 0 && (
-          <motion.button
-            onClick={handleClear}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-4 w-full max-w-[8rem] mx-auto h-10 bg-white text-black font-bold rounded-full shadow-sm hover:bg-red-600 transition-all duration-300"
-          >
-            Clear
-          </motion.button>
+          <div className="flex gap-4 justify-center mt-4">
+            <motion.button
+              onClick={handleClear}
+              whileHover={{ scale: 1.05 }}
+              className="px-4 py-2 bg-red-600 rounded-full"
+            >
+              Clear
+            </motion.button>
+
+            <motion.button
+              onClick={handleScan}
+              whileHover={{ scale: 1.05 }}
+              disabled={isScanning}
+              className={`px-4 py-2 rounded-full ${
+                isScanning ? 'bg-gray-400' : 'bg-blue-500 text-white'
+              }`}
+            >
+              {isScanning ? 'Scanning...' : 'Scan for Malware'}
+            </motion.button>
+          </div>
+        )}
+        {scanResults && (
+          <div className="mt-4 p-4 border border-white/25 rounded-2xl hover:bg-slate-900">
+            <h3 className="font-bold">Scan Results:</h3>
+            {scanResults.error ? (
+              <p className="text-red-500">{scanResults.error}</p>
+            ) : (
+              <>
+                <p>File: {scanResults.file}</p>
+                <p
+                  className={scanResults.status === 'MALICIOUS' ? 'text-red-500' : 'text-green-500'}
+                >
+                  Status: {scanResults.status}
+                </p>
+                <p>Confidence: {scanResults.confidence}</p>
+              </>
+            )}
+          </div>
         )}
       </motion.div>
     </div>

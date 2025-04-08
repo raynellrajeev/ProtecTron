@@ -1,5 +1,11 @@
 # Created by https://www.gitignore.io
-
+malware_dataset/
+.h5
+malware_dataset/malware_model.h5
+.sqlite3-journal
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 ### OSX ###
 .DS_Store
 .AppleDouble
@@ -86,4 +92,5 @@ __pycache__/
 local_settings.py
 
 .env
-db.sqlite3
+db.sqlite3malware_detection/malware_model.h5
+malware_detection/malware_model.h5

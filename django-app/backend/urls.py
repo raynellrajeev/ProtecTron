@@ -29,4 +29,5 @@ urlpatterns = [
     path('api/', include('api.urls')), 
     path('api/', include('monitor.urls')),
     path('api/watch/', include('scan.urls')),
+    path('api/malware/', include('malware_detection.urls')), 
 ]
