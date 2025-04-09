@@ -46,7 +46,7 @@ export default function Home() {
           <FullScanButton title="Full Scan" />
         </div>
         <div className="col-span-1 row-span-1 border-2 rounded-2xl flex items-center justify-center bg-neutral-800/30 border-white/25 overflow-y-auto  no-scrollbar flex-col">
-          <span className="text-center font-semibold text-xl">Threats Detected:</span>
+          <span className="text-center text-white font-medium text-xl">Threats Detected:</span>
           &nbsp;
           <p className={`${getThreatColor(threatCount)} text-center font-semibold text-4xl`}>
             {threatCount}
