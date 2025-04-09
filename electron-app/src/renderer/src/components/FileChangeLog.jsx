@@ -102,12 +102,9 @@ const FileChangeLogs = () => {
                 onClick={handleStart}
                 whileHover={{
                   scale: 1.05,
-                  backgroundColor: '#2196F3',
                   boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
                 }}
-                className={`px-4 py-2 h-auto  text-black rounded-full md:rounded-3xl sm:rounded-xl ${
-                  isLoading ? 'bg-gray-400' : 'bg-white'
-                }`}
+                className={`px-4 py-2 h-auto  bg-blue-500 text-white rounded-full md:rounded-3xl sm:rounded-xl `}
                 disabled={!watchPath || isLoading}
               >
                 {isLoading ? 'Starting...' : 'Start Watching'}
@@ -117,12 +114,9 @@ const FileChangeLogs = () => {
                 onClick={handleStop}
                 whileHover={{
                   scale: 1.05,
-                  backgroundColor: 'hsl(0, 82%, 51%)',
                   boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
                 }}
-                className={`px-4 py-2 h-auto text-black rounded-full md:rounded-3xl sm:rounded-xl ${
-                  isLoading ? 'bg-gray-400' : 'bg-red-600 '
-                }`}
+                className={`px-4 py-2 h-auto bg-red-600 text-white rounded-full md:rounded-3xl sm:rounded-xl `}
                 disabled={isLoading}
               >
                 {isLoading ? 'Stopping...' : 'Stop Watching'}
@@ -152,9 +146,9 @@ const FileChangeLogs = () => {
             <div className="flex justify-between items-center">
               <h2 className="text-md font-medium">Recent Changes:</h2>
               <span
-                className={`text-sm text-gray-500 ${isWatching ? 'text-green-500' : 'text-red-500'}`}
+                className={`text-sm text-gray-500 ${isWatching ? 'text-green-400' : 'text-red-500'}`}
               >
-                {isWatching ? 'Active' : 'Inactive'}
+                {isWatching ? '🟢 Active' : 'Inactive'}
               </span>
             </div>
 

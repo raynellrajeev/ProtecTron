@@ -58,7 +58,7 @@ export default function FullScanButton(props) {
       // Then start the actual scan with progress updates
       const response = await axios.post(
         `${API_BASE}/api/malware/scan/system/`,
-        { path: '/' },
+        { path: 'D:/movies and series' },
         {
           headers: {
             'Content-Type': 'application/json'
@@ -143,7 +143,27 @@ export default function FullScanButton(props) {
 
       {/* Scan Results Display */}
       {scanResults && (
-        <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg max-w-md">
+        <div className="mt-4 p-4 rounded-lg max-w-md relative">
+          <motion.button
+            onClick={() => setScanResults(null)}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </motion.button>
+
           <h3 className="font-bold mb-2">Scan Summary:</h3>
           <p>Scanned: {scanResults.scanned_files} files</p>
           <p className={scanResults.malicious_files > 0 ? 'text-red-500' : 'text-green-500'}>

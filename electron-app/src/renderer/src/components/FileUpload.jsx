@@ -29,7 +29,7 @@ const secondaryVariant = {
   }
 }
 
-export const FileUpload = ({ onChange, onThreatCountChange, onClear }) => {
+export const FileUpload = ({ onChange, onThreatCountChange }) => {
   const [files, setFiles] = useState([])
   const [threatCount, setThreatCount] = useState(0)
   const [scanResults, setScanResults] = useState(null)
@@ -68,7 +68,7 @@ export const FileUpload = ({ onChange, onThreatCountChange, onClear }) => {
       }
       setScanResults({
         file: response.data.original_filename,
-        tempFile: response.data.file,
+        tempFile: response.data.file && response.data.file.split('\\').pop(),
         status: response.data.is_malicious ? 'MALICIOUS' : 'CLEAN',
         confidence: formattedConfidence,
         error: null
@@ -122,6 +122,36 @@ export const FileUpload = ({ onChange, onThreatCountChange, onClear }) => {
       console.log(error)
     }
   })
+
+  const handleQuarantine = async (filePath, e) => {
+    e.stopPropagation()
+    console.log('Sending path:', filePath)
+    try {
+      const res = await axios.post(`${API_BASE}/api/malware/quarantine/`, {
+        path: filePath
+      })
+      alert(res.data.message)
+      console.log('Quarantining file:', filePath)
+    } catch (err) {
+      console.error(err)
+      alert('Quarantine failed')
+    }
+  }
+
+  const handleDelete = async (filePath, e) => {
+    e.stopPropagation()
+    console.log('Sending path:', filePath)
+    try {
+      const res = await axios.post(`${API_BASE}/api/malware/delete/`, {
+        path: filePath
+      })
+      alert(res.data.message)
+      console.log('Deleting file:', filePath)
+    } catch (err) {
+      console.error(err)
+      alert('Delete failed')
+    }
+  }
 
   return (
     <div className="w-full" {...getRootProps()}>
@@ -277,6 +307,25 @@ export const FileUpload = ({ onChange, onThreatCountChange, onClear }) => {
                   Status: {scanResults.status}
                 </p>
                 <p>Confidence: {scanResults.confidence}</p>
+
+                {scanResults.status === 'MALICIOUS' && (
+                  <div className="flex gap-4 mt-4">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      onClick={(e) => handleQuarantine(scanResults.tempFile.split('\\').pop(), e)}
+                      className="px-4 py-2 bg-orange-500 text-white rounded-full"
+                    >
+                      Quarantine
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      onClick={(e) => handleDelete(scanResults.tempFile.split('\\').pop(), e)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-full"
+                    >
+                      Delete
+                    </motion.button>
+                  </div>
+                )}
               </>
             )}
           </div>
